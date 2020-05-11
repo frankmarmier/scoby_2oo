@@ -6,8 +6,7 @@ const userSchema = new Schema({
   lastName: String,
   profileImg: {
     type: String,
-    default:
-      "https://vignette.wikia.nocookie.net/simpsons/images/1/14/Ralph_Wiggum.png/revision/latest/top-crop/width/360/height/360?cb=20100704163100",
+    default: "https://vignette.wikia.nocookie.net/simpsons/images/1/14/Ralph_Wiggum.png/revision/latest/top-crop/width/360/height/360?cb=20100704163100",
   },
   email: String,
   password: String,
