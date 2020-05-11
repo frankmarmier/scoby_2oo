@@ -1,0 +1,91 @@
+.CardItem {
+  margin-top: 50px;
+}
+
+.CardItem .item {
+  display: flex;
+  padding: 20px 40px;
+  flex-direction: row-reverse;
+  align-items: center;
+  justify-content: space-between;
+  background: white;
+  max-width: 800px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+}
+
+.CardItem .round-image {
+  height: 200px;
+  width: 200px;
+  border-radius: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.CardItem .item-empty {
+  margin-top: 60px;
+  display: flex;
+  padding: 40px 40px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 800px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+}
+
+.CardItem .item-empty button {
+  margin-top: 20px;
+  width: 100%;
+  background: #5663ff;
+  color: white;
+  font-size: 16px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  border: none;
+}
+
+.CardItem .round-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.CardItem .description {
+  flex: 2;
+  text-align: center;
+}
+
+.CardItem .description h2 {
+  margin: 10px 0;
+}
+.CardItem .description h2 {
+  margin: 5px 0;
+  font-weight: 400;
+}
+
+.CardItem .buttons {
+  display: flex;
+}
+
+.CardItem button {
+  padding: 12px 20px;
+  margin-right: 10px;
+  border-radius: 10px;
+  font-size: 16px;
+}
+
+.CardItem .btn-secondary {
+  color: #5663ff;
+  border: 1px solid #5663ff;
+}
+
+.CardItem .btn-primary {
+  color: white;
+  background-color: #5663ff;
+}
+
+.CardItem > h3 {
+  text-align: center;
+}
