@@ -13,6 +13,7 @@ class Profile extends Component {
         <h2 style={{ fontSize: "1.5rem", marginBottom: "10px" }}>
           This is profile, it's protected !
         </h2>
+        <p>Hello</p>
         <p>
           Checkout the<b>ProtectedRoute</b> component in
           <code>./components/ProtectRoute.jsx</code>
