@@ -1,5 +1,6 @@
 require("dotenv").config();
 require("../config/dbConnection");
+const mongoose = require("mongoose");
 
 const Item = require("../models/Items");
 const User = require("../models/User");
@@ -7,6 +8,8 @@ const Contact = require("../models/Contact");
 
 async function seedIt() {
   try {
+    mongoose.connection.dropDatabase();
+
     const contact = [
       {
         phoneNumber: "0678905436",
@@ -22,7 +25,7 @@ async function seedIt() {
       email: "audreyfake@gmail.com",
       password: "1234",
       city: "Paris",
-      contact: contactSeed._id,
+      contact: "5f1ee01d1d57813dd5547628",
     };
 
     const userSeed = await User.create(user);
@@ -37,7 +40,7 @@ async function seedIt() {
       address: "Copenhagen",
       location: {
         type: "Point",
-        coordinates: [12.550343, 55.665957]
+        coordinates: [12.550343, 55.665957],
       },
       id_user: userSeed._id,
     };
