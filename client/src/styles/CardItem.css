@@ -69,23 +69,6 @@
   display: flex;
 }
 
-.CardItem button {
-  padding: 12px 20px;
-  margin-right: 10px;
-  border-radius: 10px;
-  font-size: 16px;
-}
-
-.CardItem .btn-secondary {
-  color: #5663ff;
-  border: 1px solid #5663ff;
-}
-
-.CardItem .btn-primary {
-  color: white;
-  background-color: #5663ff;
-}
-
 .CardItem > h3 {
   text-align: center;
 }

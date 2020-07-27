@@ -12,11 +12,11 @@ class LocationAutoComplete extends Component {
     };
     this.handleSearchChange = this.handleSearchChange.bind(this);
 
-    // if (!process.env.REACT_APP_MAPBOX_TOKEN) {
-    //   throw new Error(
-    //     "You don't have any 'process.env.REACT_APP_MAPBOX_API_KEY'"
-    //   );
-    // }
+    if (!process.env.REACT_APP_MAPBOX_TOKEN) {
+      throw new Error(
+        "You don't have any 'process.env.REACT_APP_MAPBOX_API_KEY'"
+      );
+    }
   }
 
   handleSearchChange(e) {

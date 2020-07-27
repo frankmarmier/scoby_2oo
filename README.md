@@ -4,13 +4,13 @@
 
 You will need 2 terminals for this.
 
-Option 1: using the global scripts in the root package.json   
-`npm run dev:client` will launch react's npm's start.   
-`npm run dev:server` will launch the servers npm run dev script.  
-  
+Option 1: using the global scripts in the root package.json  
+`npm run dev:client` will launch react's npm's start.  
+`npm run dev:server` will launch the servers npm run dev script.
+
 Option 2: navigation to ./client and ./server  
 @./client => `npm start`  
-@./server => `npm run dev`  
+@./server => `npm run dev`
 
 ## Environment variables
 

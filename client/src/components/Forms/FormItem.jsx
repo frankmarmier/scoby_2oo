@@ -19,7 +19,7 @@ class ItemForm extends Component {
     // The object that you'll be sending will maybe be a nested object, in order to handle nested objects in our form data
     // Check out the stackoverflow solution below : )
 
-    // Nested object into formData by user Raj Pawam Gumdal @stackoverflow : ) => https://stackoverflow.com/a/42241875/13374041
+    // Nested object into formData by user Vladimir "Vladi vlad" Novopashin @stackoverflow : ) => https://stackoverflow.com/a/42483509
   };
 
   handlePlace = (place) => {
