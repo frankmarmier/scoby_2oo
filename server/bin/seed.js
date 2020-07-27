@@ -37,8 +37,7 @@ async function seedIt() {
       address: "Copenhagen",
       location: {
         type: "Point",
-        coordinates: [12.550343, 55.665957],
-        formattedAddress: "Copenhagen",
+        coordinates: [12.550343, 55.665957]
       },
       id_user: userSeed._id,
     };
