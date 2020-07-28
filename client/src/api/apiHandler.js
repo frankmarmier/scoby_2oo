@@ -88,7 +88,7 @@ export default {
 
   updateOneUser(id,data) {
     return service
-      .patch(`/api/users/${id}`, data)
+      .patch(`/api/users/${id} `, data)
       .then((res) => res.data)
       .catch(errorHandler);
   },
