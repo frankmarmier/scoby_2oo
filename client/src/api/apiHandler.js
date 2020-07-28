@@ -6,7 +6,7 @@ const service = axios.create({
 });
 
 function errorHandler(error) {
-  if (error.response.data) {
+  if (error.response) {
     console.log(error.response && error.response.data);
     throw error;
   }
@@ -58,16 +58,16 @@ export default {
       .catch(errorHandler);
   },
 
-  updateOneItem(id, data) {
+  createOneItem(data) {
     return service
-      .patch(`/api/items/${id}`, data)
+      .post("/api/items", data)
       .then((res) => res.data)
       .catch(errorHandler);
   },
 
-  createOneItem(data) {
+  updateOneItem(id, data) {
     return service
-      .post("/api/items", data)
+      .patch(`/api/items/${id}`, data)
       .then((res) => res.data)
       .catch(errorHandler);
   },

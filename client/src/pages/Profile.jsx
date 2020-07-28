@@ -3,7 +3,24 @@ import { Link } from "react-router-dom";
 import { withUser } from "../components/Auth/withUser";
 import "../styles/Profile.css";
 import "../styles/CardItem.css";
+import apiHandler from "../api/apiHandler";
+import CardItem from "./../components/Cards/CardItem";
+
 class Profile extends Component {
+  state = {
+    items: [],
+  };
+
+  componentDidMount() {
+    apiHandler
+      .getItems()
+      .then((items) => {
+        console.log(items.data);
+        this.setState({ items: items.data });
+      })
+      .catch((err) => console.log(err));
+  }
+
   render() {
     const { authContext } = this.props;
     const { user } = authContext;
@@ -78,19 +95,16 @@ class Profile extends Component {
                   alt="item"
                 />
               </div>
-              <div className="description">
-                <h2>Name of item</h2>
-                <h4>Quantity: 1 </h4>
-                <p>Description of the item</p>
-                <div className="buttons">
-                  <span>
-                    <button className="btn-secondary">Delete</button>
-                  </span>
-                  <span>
-                    <button className="btn-primary">Edit</button>
-                  </span>
-                </div>
-              </div>
+
+              <ul className="description">
+              {/* FILTER */}
+                {this.state.items.map((oneItem) => (
+                  <li key={oneItem._id}>
+                    <CardItem item={oneItem} delete={this.deleteOneItem} />
+                  </li>
+                ))}
+              </ul>
+              
             </div>
           </div>
         </section>
