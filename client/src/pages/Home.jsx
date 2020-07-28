@@ -1,5 +1,5 @@
 import React from "react";
-import ReactMapboxGl, { Marker } from "react-mapbox-gl";
+import ReactMapboxGl, { Marker, Popup } from "react-mapbox-gl";
 import apiHandler from "./../api/apiHandler";
 
 const Map = ReactMapboxGl({
@@ -11,6 +11,7 @@ class Home extends React.Component {
 		longitude: 2.3522,
 		latitude: 48.8566,
 		allItems: [],
+		selectedItem: null,
 	};
 
 	// get coordinate from API
@@ -26,7 +27,17 @@ class Home extends React.Component {
 			.catch((error) => console.log(error));
 	}
 
+	selectOneItem = (item) => {
+		if (!this.state.selectedItem || this.state.selectedItem._id !== item._id)
+			this.setState({ selectedItem: item });
+		else if (this.state.selectedItem) this.setState({ selectedItem: null });
+	};
+
 	render() {
+		const { longitude, latitude, allItems, selectedItem } = this.state;
+
+		console.log("selectedItem : ", selectedItem);
+
 		return (
 			<div className="mapContainer">
 				<h1>The map</h1>
@@ -39,15 +50,31 @@ class Home extends React.Component {
 						margin: "auto",
 						zoom: 1,
 					}}
-					center={[this.state.longitude, this.state.latitude]}
+					center={[longitude, latitude]}
 				>
-					{this.state.allItems.map((item) => (
+					{allItems.map((item) => (
 						<Marker key={item._id} coordinates={item.location.coordinates}>
-							<button className="marker-btn">
-								<img src="./../media/marker-purple.svg" alt="marker" />
+							<button
+								className="marker-btn"
+								onClick={(event) => {
+									this.selectOneItem(item);
+								}}
+							>
+								<img src={item.image} alt="marker" />
 							</button>
 						</Marker>
 					))}
+
+					{selectedItem ? (
+						<Popup
+							coordinates={selectedItem.location.coordinates}
+							offset={{
+								bottom: [0, -50],
+							}}
+						>
+							selection : {selectedItem.name}  {/* INSERT COMPONENT ITEM CARD  */}
+						</Popup>
+					) : null}
 				</Map>
 			</div>
 		);
