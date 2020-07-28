@@ -30,7 +30,8 @@ app.use(
     saveUninitialized: true,
   })
 );
-app.use(  // AUDREY
+app.use(
+	// AUDREY
 	cors({
 		origin: process.env.FRONTEND_URL,
 		optionsSuccessStatus: 200,

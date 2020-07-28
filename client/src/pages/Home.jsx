@@ -1,6 +1,5 @@
 import React from "react";
 import ReactMapboxGl, { Layer, Feature } from "react-mapbox-gl";
-import { useState } from "react";
 import apiHandler from "./../api/apiHandler";
 
 const Map = ReactMapboxGl({
@@ -9,31 +8,31 @@ const Map = ReactMapboxGl({
 
 class Home extends React.Component {
 	state = {
-		longitude:2.3522,
-		latitude:48.8566,
+		longitude: 2.3522,
+		latitude: 48.8566,
 		allItems: [],
 	};
-	// get coordinate from API
 
+	// get coordinate from API
 	componentDidMount() {
 		console.log("DANS APIHANDLER");
 
 		apiHandler
 			.getItems()
-			.then((dbRes) => console.log("DB RES ", dbRes))
+			.then((dbRes) => {
+				console.log("DB RES ITEMS ", dbRes);
+				this.setState({allItems : dbRes})
+			})
 			.catch((error) => console.log(error));
 	}
 
-	// Implement react map box here.
-
 	render() {
-		console.log(this.state.longitude, this.state.latitude);
 		return (
 			<div className="mapContainer">
 				<h1>The map</h1>
 				<Map
 					className="mapContainer"
-					style="mapbox://styles/mapbox/streets-v11"
+					style="mapbox://styles/abwashere/ckd51anww06nb1jqvlppqdeba"
 					containerStyle={{
 						height: "90vh",
 						width: "90vw",
@@ -42,7 +41,7 @@ class Home extends React.Component {
 					}}
 					center={[this.state.longitude, this.state.latitude]}
 				>
-		{/* 			{apiData.map((item) => {
+					{/* 			{apiData.map((item) => {
 						<Layer
 						key = {item._id}
 							type="symbol"
