@@ -1,6 +1,7 @@
 import React from "react";
-import ReactMapboxGl, { Marker, Popup } from "react-mapbox-gl";
+import ReactMapboxGl, { Marker } from "react-mapbox-gl";
 import apiHandler from "./../api/apiHandler";
+import MapCardItem from "./../components/Cards/MapCardItem";
 
 const Map = ReactMapboxGl({
 	accessToken: process.env.REACT_APP_MAPBOX_TOKEN,
@@ -45,9 +46,8 @@ class Home extends React.Component {
 					className="mapContainer"
 					style="mapbox://styles/abwashere/ckd51anww06nb1jqvlppqdeba"
 					containerStyle={{
-						height: "90vh",
-						width: "90vw",
-						margin: "auto",
+						height: "100vh",
+						width: "100vw",
 						zoom: 1,
 					}}
 					center={[longitude, latitude]}
@@ -64,18 +64,13 @@ class Home extends React.Component {
 							</button>
 						</Marker>
 					))}
-
-					{selectedItem ? (
-						<Popup
-							coordinates={selectedItem.location.coordinates}
-							offset={{
-								bottom: [0, -50],
-							}}
-						>
-							selection : {selectedItem.name}  {/* INSERT COMPONENT ITEM CARD  */}
-						</Popup>
-					) : null}
 				</Map>
+
+				{selectedItem ? (
+					<div className="info-card">
+						<MapCardItem item={selectedItem} />
+					</div>
+				) : null}
 			</div>
 		);
 	}

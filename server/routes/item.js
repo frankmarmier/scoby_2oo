@@ -7,7 +7,7 @@ const itemModel = require("./../models/Items");
 router.get("/", (req, res, next) => {
   itemModel
     .find()
-    .populate("User")
+    .populate("User User.contact")
     .then((items) => {
       res.status(200).json(items);
     })
@@ -18,10 +18,10 @@ router.get("/", (req, res, next) => {
 
 router.get("/:id", (req, res, next) => {
   itemModel
-    .findById(req.params.id)
-    .populate("User")
-    .then((item) => res.status(200).json(item))
-    .catch(next);
+		.findById(req.params.id)
+		.populate("User User.contact")
+		.then((item) => res.status(200).json(item))
+		.catch(next);
 });
 
 // Post one item in the DB

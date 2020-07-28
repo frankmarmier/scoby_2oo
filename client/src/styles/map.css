@@ -1,8 +1,64 @@
+.mapContainer {
+	position: relative;
+}
+
 .marker-btn {
 	border: 1px solid rgba(0, 0, 255, 0.74);
 	cursor: pointer;
 }
 
 .marker-btn img {
-  height: 40px;
+	height: 40px;
+}
+
+/* .mapboxgl-popup-anchor-bottom-left .mapboxgl-popup-content {
+	width: 30vw;
+	height: fit-content;
+	border-radius: 20px;
+	display: flex;
+	flex-direction: column;
+	padding: 12px 10px;
+} */
+
+.map-card {
+	position: absolute;
+	left: 10px;
+	top: 100px;
+	min-width: 30vw;
+	height: fit-content;
+	border-radius: 20px;
+	display: flex;
+	flex-direction: column;
+	padding: 12px 10px;
+	background-color: white;
+	z-index: 100;
+}
+
+.map-card .item-img {
+	height: 150px;
+	box-sizing: border-box;
+	margin: 0 auto 15px;
+}
+
+.map-card .name,
+.category,
+.owner,
+.contact {
+	text-align: center;
+	margin: 5px auto;
+}
+
+.map-card .owner .pic {
+	height: 30px;
+	border-radius: 100%;
+	box-sizing: border-box;
+}
+
+.map-card .contact {
+	background-color: #f1f2ff;
+	color: #5663ff;
+	width: 100%;
+	height: 40px;
+	line-height: 40px;
+	margin: 10px 0;
 }
