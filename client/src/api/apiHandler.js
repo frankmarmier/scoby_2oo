@@ -74,7 +74,7 @@ export default {
 
   deleteOneItem(id) {
     return service
-      .post(`/api/items/${id}`)
+      .delete(`/api/items/${id}`)
       .then((res) => res.data)
       .catch(errorHandler);
   },

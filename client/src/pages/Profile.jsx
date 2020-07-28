@@ -15,11 +15,20 @@ class Profile extends Component {
     apiHandler
       .getItems()
       .then((items) => {
-        console.log(items.data);
-        this.setState({ items: items.data });
+        console.log("this is getItems", items);
+        this.setState({ items: items});
       })
       .catch((err) => console.log(err));
   }
+
+ deleteThisItem = (itemId) => {
+   apiHandler
+   .deleteOneItem(itemId)
+   .then((dbRes) => {
+   this.setState({ items: this.state.items.filter(item => item._id !== itemId)})
+})
+   .catch((err) => console.log(err))
+ }
 
   render() {
     const { authContext } = this.props;
@@ -88,25 +97,17 @@ class Profile extends Component {
 
           <div className="CardItem">
             <h3>Your items</h3>
-            <div className="item">
-              <div className="round-image">
-                <img
-                  src="https://vignette.wikia.nocookie.net/simpsons/images/1/14/Ralph_Wiggum.png/revision/latest/top-crop/width/360/height/360?cb=20100704163100"
-                  alt="item"
-                />
-              </div>
-
               <ul className="description">
               {/* FILTER */}
+              {/* Add item photo */}
                 {this.state.items.map((oneItem) => (
                   <li key={oneItem._id}>
-                    <CardItem item={oneItem} delete={this.deleteOneItem} />
+                    <CardItem item={oneItem} deleteItem={this.deleteThisItem} />
                   </li>
                 ))}
               </ul>
               
             </div>
-          </div>
         </section>
       </div>
     );

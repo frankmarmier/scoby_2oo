@@ -17,9 +17,9 @@ function App() {
         <Route exact path="/" component={Home} />
         <Route exact path="/signin" component={Signin} />
         <Route exact path="/signup" component={Signup} />
-        <ProtectedRoute exact path="/items/create" component={FormItem} />
-        <ProtectedRoute exact path="/profile" component={Profile} />
-        <ProtectedRoute path="/items/:id" component={FormItemUpdate} />
+        <Route exact path="/items/create" component={FormItem} />
+        <Route exact path="/profile" component={Profile} />
+        <Route path="/items/:id" component={FormItemUpdate} />
       </Switch>
     </React.Fragment>
   );
