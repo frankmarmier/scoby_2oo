@@ -16,18 +16,6 @@ class ItemForm extends Component {
     image: "",
   };
 
-  // componentDidMount() {
-  //   console.log(this.props);
-  //   apiHandler
-  //     .getUsers()
-  //     .then((dbRes) => {
-  //       this.setState({ id_user: dbRes.data });
-  //     })
-  //     .catch((err) => {
-  //       console.error(err);
-  //     });
-  // }
-
   handleChange = (event) => {
     let key = event.target.name;
     let value;
