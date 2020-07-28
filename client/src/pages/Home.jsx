@@ -1,5 +1,5 @@
 import React from "react";
-import ReactMapboxGl, { Layer, Feature } from "react-mapbox-gl";
+import ReactMapboxGl, { Marker } from "react-mapbox-gl";
 import apiHandler from "./../api/apiHandler";
 
 const Map = ReactMapboxGl({
@@ -21,7 +21,7 @@ class Home extends React.Component {
 			.getItems()
 			.then((dbRes) => {
 				console.log("DB RES ITEMS ", dbRes);
-				this.setState({allItems : dbRes})
+				this.setState({ allItems: dbRes });
 			})
 			.catch((error) => console.log(error));
 	}
@@ -41,18 +41,14 @@ class Home extends React.Component {
 					}}
 					center={[this.state.longitude, this.state.latitude]}
 				>
-					{/* 			{apiData.map((item) => {
-						<Layer
-						key = {item._id}
-							type="symbol"
-							id="marker"
-							layout={{ "icon-image": "marker-15" }}
-						>
-							<Feature coordinates={[item.longitude, item.latitude]} />;
-						</Layer>;
-					})} */}
+					{this.state.allItems.map((item) => (
+						<Marker key={item._id} coordinates={item.location.coordinates}>
+							<button className="marker-btn">
+								<img src="./../media/marker-purple.svg" alt="marker" />
+							</button>
+						</Marker>
+					))}
 				</Map>
-				;
 			</div>
 		);
 	}
