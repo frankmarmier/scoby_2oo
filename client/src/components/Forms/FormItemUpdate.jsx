@@ -1,18 +1,57 @@
 import React, { Component } from "react";
 import LocationAutoComplete from "../LocationAutoComplete";
 import "../../styles/form.css";
+import apiHandler from "../../api/apiHandler";
 
 class FormItemUpdate extends Component {
-  state = {};
+  state = {
+    name: "",
+    description:"",
+    category:"",
+    quantity:"",
+    address:"",
+    location:"",
+    id_user:"",
+    image: "",
+  };
 
-  handleChange(event) {
-    console.log("Wax On Wax Off");
-    this.setState({});
+  handleChange = (event) => {
+    let key = event.target.name;
+    console.log("this is the key", key);
+    let value;
+    if (event.target.type === 'radio') {
+      value = event.target.value === 'yes' ? true : false;
+    } else {
+      value = event.target.value;
+    }
+    console.log("handlechange was called with the following key value pair", key, value);
+    this.setState({ [key]: value });
   }
 
   handleSubmit = (event) => {
+    console.log("handlesubmit was called on the following event", event);
+
     event.preventDefault();
-    console.log("Wax On Wax Off");
+    const itemId = this.props.match.params.id;
+    console.log("this is the itemId", itemId)
+
+    apiHandler
+      .updateOneItem(itemId, {
+        name: this.state.name,
+        description:this.state.description,
+        category:this.state.category,
+        quantity:this.state.quantity,
+        address:this.state.address,
+        location:this.state.location,
+        id_user:this.state.id_user,
+        image: this.state.image,
+      })
+      .then((apiRes) => {
+        console.log("handlesubmit updated the state to the following", this.state);
+
+        // this.props.history.push("/profile");
+      })
+      .catch((error) => console.log(error));
 
     // In order to send back the data to the client, since there is an input type file you have to send the
     // data as formdata.
@@ -32,7 +71,7 @@ class FormItemUpdate extends Component {
   render() {
     return (
       <div className="ItemForm-container">
-        <form className="form" onChange={this.handleChange}>
+        <form className="form" onSubmit={this.handleSubmit}>
           <h2 className="title">Update Item</h2>
 
           <div className="form-group">
@@ -44,6 +83,7 @@ class FormItemUpdate extends Component {
               className="input"
               type="text"
               placeholder="What are you giving away ?"
+              onChange={this.handleChange}
             />
           </div>
 
@@ -52,7 +92,7 @@ class FormItemUpdate extends Component {
               Category
             </label>
 
-            <select id="category" defaultValue="-1">
+            <select id="category" defaultValue="-1" onChange={this.handleChange}>
               <option value="-1" disabled>
                 Select a category
               </option>
@@ -67,7 +107,7 @@ class FormItemUpdate extends Component {
             <label className="label" htmlFor="quantity">
               Quantity
             </label>
-            <input className="input" id="quantity" type="number" />
+            <input className="input" id="quantity" type="number" onChange={this.handleChange} />
           </div>
 
           <div className="form-group">
@@ -85,6 +125,7 @@ class FormItemUpdate extends Component {
               id="description"
               className="text-area"
               placeholder="Tell us something about this item"
+              onChange={this.handleChange}
             ></textarea>
           </div>
 
@@ -92,7 +133,7 @@ class FormItemUpdate extends Component {
             <label className="custom-upload label" htmlFor="image">
               Upload image
             </label>
-            <input className="input" id="image" type="file" />
+            <input className="input" id="image" type="file" onChange={this.handleChange} />
           </div>
 
           <h2>Contact information</h2>
@@ -102,10 +143,10 @@ class FormItemUpdate extends Component {
               How do you want to be reached?
             </label>
             <div>
-              <input type="radio" />
+              <input type="radio" onChange={this.handleChange} />
               user email
             </div>
-            <input type="radio" />
+            <input type="radio" onChange={this.handleChange} />
             contact phone number
           </div>
 
@@ -115,7 +156,7 @@ class FormItemUpdate extends Component {
             personal page.
           </p>
 
-          <button className="btn-submit">Add Item</button>
+          <button className="btn-submit">Update Item</button>
         </form>
       </div>
     );

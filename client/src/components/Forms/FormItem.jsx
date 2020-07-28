@@ -1,25 +1,71 @@
 import React, { Component } from "react";
 import LocationAutoComplete from "../LocationAutoComplete";
 import "../../styles/form.css";
+import apiHandler from "../../api/apiHandler";
+import { withUser } from "./../Auth/withUser";
 
 class ItemForm extends Component {
-  state = {};
+  state = {
+    name: "",
+    description: "",
+    category: "",
+    quantity: "",
+    address: "",
+    location: "",
+    id_user: "",
+    image: "",
+  };
 
-  handleChange(event) {
-    console.log("Wax On Wax Off");
-    this.setState({});
-  }
+  // componentDidMount() {
+  //   console.log(this.props);
+  //   apiHandler
+  //     .getUsers()
+  //     .then((dbRes) => {
+  //       this.setState({ id_user: dbRes.data });
+  //     })
+  //     .catch((err) => {
+  //       console.error(err);
+  //     });
+  // }
+
+  handleChange = (event) => {
+    let key = event.target.name;
+    let value;
+    if (event.target.type === "radio") {
+      value = event.target.value === "yes" ? true : false;
+    } else {
+      value = event.target.value;
+    }
+    this.setState({ [key]: value });
+  };
 
   handleSubmit = (event) => {
     event.preventDefault();
-    console.log("Wax On Wax Off");
+    console.log(
+      "this is this.props.authContext.user",
+      this.props.authContext.user
+    );
 
-    // In order to send back the data to the client, since there is an input type file you have to send the
-    // data as formdata.
-    // The object that you'll be sending will maybe be a nested object, in order to handle nested objects in our form data
-    // Check out the stackoverflow solution below : )
+    apiHandler
+      .createOneItem({
+        name: this.state.name,
+        description: this.state.description,
+        category: this.state.category,
+        quantity: this.state.quantity,
+        address: this.state.address,
+        location: this.state.location,
+        id_user: this.props.authContext.user,
+        image: this.state.image,
+      })
+      .then((apiRes) => {
+        console.log(
+          "handlesubmit updated the state to the following",
+          this.state
+        );
 
-    // Nested object into formData by user Vladimir "Vladi vlad" Novopashin @stackoverflow : ) => https://stackoverflow.com/a/42483509
+        // this.props.history.push("/");
+      })
+      .catch((error) => console.log(error));
   };
 
   handlePlace = (place) => {
@@ -32,8 +78,8 @@ class ItemForm extends Component {
   render() {
     return (
       <div className="ItemForm-container">
-        <form className="form" onChange={this.handleChange}>
-          <h2 className="title">Add Item</h2>
+        <form className="form" onSubmit={this.handleSubmit}>
+          <h2 className="title">Create Item</h2>
 
           <div className="form-group">
             <label className="label" htmlFor="name">
@@ -44,6 +90,8 @@ class ItemForm extends Component {
               className="input"
               type="text"
               placeholder="What are you giving away ?"
+              onChange={this.handleChange}
+              name="name"
             />
           </div>
 
@@ -52,7 +100,12 @@ class ItemForm extends Component {
               Category
             </label>
 
-            <select id="category" defaultValue="-1">
+            <select
+              id="category"
+              defaultValue="-1"
+              onChange={this.handleChange}
+              name="category"
+            >
               <option value="-1" disabled>
                 Select a category
               </option>
@@ -67,7 +120,13 @@ class ItemForm extends Component {
             <label className="label" htmlFor="quantity">
               Quantity
             </label>
-            <input className="input" id="quantity" type="number" />
+            <input
+              className="input"
+              id="quantity"
+              type="number"
+              onChange={this.handleChange}
+              name="quantity"
+            />
           </div>
 
           <div className="form-group">
@@ -85,6 +144,8 @@ class ItemForm extends Component {
               id="description"
               className="text-area"
               placeholder="Tell us something about this item"
+              onChange={this.handleChange}
+              name="description"
             ></textarea>
           </div>
 
@@ -92,7 +153,13 @@ class ItemForm extends Component {
             <label className="custom-upload label" htmlFor="image">
               Upload image
             </label>
-            <input className="input" id="image" type="file" />
+            <input
+              className="input"
+              id="image"
+              type="file"
+              onChange={this.handleChange}
+              name="image"
+            />
           </div>
 
           <h2>Contact information</h2>
@@ -102,10 +169,10 @@ class ItemForm extends Component {
               How do you want to be reached?
             </label>
             <div>
-              <input type="radio" />
+              <input type="radio" onChange={this.handleChange} name="contact" />
               user email
             </div>
-            <input type="radio" />
+            <input type="radio" onChange={this.handleChange} name="contact" />
             contact phone number
           </div>
 
@@ -122,4 +189,4 @@ class ItemForm extends Component {
   }
 }
 
-export default ItemForm;
+export default withUser(ItemForm);
