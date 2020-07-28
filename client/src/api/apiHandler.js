@@ -58,16 +58,16 @@ export default {
       .catch(errorHandler);
   },
 
-  createOneItem(data) {
+  updateOneItem(id, data) {
     return service
-      .post("/api/items", data)
+      .patch(`/api/items/${id}`, data)
       .then((res) => res.data)
       .catch(errorHandler);
   },
 
-  updateOneItem(id,data) {
+  createOneItem(data) {
     return service
-      .patch(`/api/items/${id}`, data)
+      .post("/api/items", data)
       .then((res) => res.data)
       .catch(errorHandler);
   },
@@ -86,11 +86,10 @@ export default {
       .catch(errorHandler);
   },
 
-  updateOneUser(id,data) {
+  updateOneUser(id, data) {
     return service
       .patch(`/api/users/${id} `, data)
       .then((res) => res.data)
       .catch(errorHandler);
   },
-  
 };
