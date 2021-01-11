@@ -36,7 +36,7 @@ app.use(
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
 const authRouter = require("./routes/auth");
-const itemRouter = require("./routes/items")
+const itemRouter = require("./routes/item")
 
 app.use("/", indexRouter);
 app.use("/api/auth", authRouter);
