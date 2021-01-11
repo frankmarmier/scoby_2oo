@@ -12,10 +12,6 @@ const userSchema = new Schema({
   email: String,
   password: String,
   city: String,
-  contact: {
-    type: Schema.Types.ObjectId,
-    ref: "Contact",
-  },
 });
 
 const User = mongoose.model("User", userSchema);

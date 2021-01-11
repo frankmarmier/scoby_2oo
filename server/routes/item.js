@@ -35,7 +35,10 @@ router.patch("/:id", (req, res, next) => {
 });
 
 router.post("/", (req, res, next) => {
-  Item.create(req.body)
+  const newItem = { ...req.body, id_user: req.session.currentUser };
+  //   req.body.id_user = req.session.currentUser; // add user id to the item object
+  console.log(req.session.currentUser);
+  Item.create(newItem)
     .then((item) => {
       res.status(201).json(item);
     })
@@ -46,6 +49,9 @@ router.post("/", (req, res, next) => {
 
 router.delete("/:id", (req, res, next) => {
   Item.findByIdAndDelete(req.params.id)
+    //   Item.findOne({
+    //     $and: [{ id_user: req.session.currentUser }, { _id: req.params.id }],
+    //   })
     .then((item) => {
       res.status(204).json({
         message: "Successfuly deleted",
