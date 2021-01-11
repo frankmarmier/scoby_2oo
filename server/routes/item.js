@@ -50,9 +50,7 @@ router.post("/", (req, res, next) => {
 router.delete("/:id", (req, res, next) => {
     Item.findByIdAndDelete(req.params.id)
         .then((item) => {
-            res.status(204).json({
-                message: "Successfuly deleted",
-            })
+            res.send("deleted !")
         })
         .catch((error) => {
             next(error)
