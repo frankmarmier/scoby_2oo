@@ -91,4 +91,4 @@ class FormSignin extends Component {
   }
 }
 
-export default withRouter(withUser(FormSignin));
+export default withRouter(withUser(FormSignin)); // Browser history and user will be given as props to the FormSignin thanks to HOCs !

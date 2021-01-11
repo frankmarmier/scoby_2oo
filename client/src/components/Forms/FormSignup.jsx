@@ -19,14 +19,7 @@ class FormSignup extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
     const { authContext } = this.props;
-    // authContext
-    //   .signup(this.state)
-    //   .then(() => {
-    //     this.props.history.push("/profile");
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
+
     apiHandler
       .signup(this.state)
       .then((data) => {

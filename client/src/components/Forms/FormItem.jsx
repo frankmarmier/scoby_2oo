@@ -32,7 +32,7 @@ class ItemForm extends Component {
   render() {
     return (
       <div className="ItemForm-container">
-        <form className="form" onChange={this.handleChange}>
+        <form className="form">
           <h2 className="title">Add Item</h2>
 
           <div className="form-group">
@@ -43,6 +43,7 @@ class ItemForm extends Component {
               id="name"
               className="input"
               type="text"
+              onChange={this.handleChange}
               placeholder="What are you giving away ?"
             />
           </div>
