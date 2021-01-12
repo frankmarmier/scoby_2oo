@@ -23,6 +23,13 @@ export default {
       .catch(errorHandler);
   },
 
+  update(userInfo) {
+    return service
+      .patch("/api/users/me", userInfo)
+      .then((res) => res.data)
+      .catch(errorHandler);
+  },
+
   signin(userInfo) {
     return service
       .post("/api/auth/signin", userInfo)
@@ -64,6 +71,13 @@ export default {
       .then(() => {
         console.log("successfully deleted");
       })
+      .catch(errorHandler);
+  },
+
+  editItem(itemId, itemInfo) {
+    return service
+      .patch("/api/items/" + itemId, itemInfo)
+      .then((res) => res.data)
       .catch(errorHandler);
   },
 };

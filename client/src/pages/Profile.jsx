@@ -132,7 +132,9 @@ class Profile extends Component {
                           </button>
                         </span>
                         <span>
-                          <button className="btn-primary">Edit</button>
+                          <button className="btn-primary">
+                            <Link to={`/item/edit/${item._id}`}>Edit</Link>
+                          </button>
                         </span>
                       </div>
                     </div>
