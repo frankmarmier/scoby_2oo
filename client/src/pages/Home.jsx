@@ -12,10 +12,8 @@ export default class Home extends Component {
     return (
       <div>
         <h1>MAPBOX MAP HERE</h1>
-     
-       <MapShow />
 
-        />
+        <MapShow />
         <p>On home /</p>
       </div>
     )

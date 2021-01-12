@@ -2,7 +2,7 @@ const express = require("express");
 const Contact = require("../models/Contact");
 const User = require("../models/User");
 const router = express.Router();
-
+const uploader = require('../config/cloudinary-setup')
 
 //GET information of the current user
 router.get("/me", (req, res, next) => {
@@ -37,9 +37,9 @@ router.post("/phone", (req, res, next) => {
 
   User.findById(req.session.currentUser)
     .then(contactField => {
-  
+
       if (!contactField.contact) {
-  
+
         Contact.create({ phoneNumber: req.body, user_id: req.session.currentUser })
           .then(contact => {
             User.findByIdAndUpdate(req.session.currentUser, { contact: contact._id }, { new: true })
@@ -48,10 +48,11 @@ router.post("/phone", (req, res, next) => {
           })
           .catch(err => res.status(500).json(err))
       } else {
-      
+
         Contact.findOneAndUpdate({ user_id: req.session.currentUser }, req.body, { new: true })
           .then(contact => {
-            res.status(200).json(contact)})
+            res.status(200).json(contact)
+          })
           .catch(err => res.status(500).json(err))
       }
     })
@@ -60,13 +61,22 @@ router.post("/phone", (req, res, next) => {
 
 
 //Update
-router.patch("/me", (req, res, next) => {
+router.patch("/me", uploader.single("image"), (req, res, next) => {
   if (!req.session.currentUser) {
     res.status(200).json({ message: 'Sign in before creating one item' });
     return;
   };
+  console.log("object", req.body, req.file)
+  let profileImg = '';
 
-  User.findByIdAndUpdate(req.session.currentUser, req.body, { new: true })
+  if (req.file) {
+    profileImg = req.file.path
+  }
+  // console.log(req.file,"imae")
+  const newItem = { ...req.body, profileImg: profileImg}
+
+
+  User.findByIdAndUpdate(req.session.currentUser, newItem, { new: true })
     .then(updatedUser => res.status(200).json(updatedUser))
     .catch(err => res.status(500).json({ message: "Failure to update user's data" }))
 });

@@ -2,20 +2,22 @@ import React, { Component } from "react";
 import LocationAutoComplete from "../LocationAutoComplete";
 import "../../styles/form.css";
 import apiHandler from "../../api/apiHandler";
+import { withRouter } from "react-router-dom";
 // import { AuthContext } from "../Auth/AuthProvider";
 
 class ItemForm extends Component {
   state = {
     item: {
-      name: '',
-      category: ["Plant"],
+      
+      category: 'Plant',
       description: '',
       address: '',
       location: {
-        coordinates: [0,0]
+        coordinates: [0, 0]
       },
       quantity: 1,
-      
+      name: '',
+
     },
     contact: {
       byEmail: false,
@@ -31,18 +33,19 @@ class ItemForm extends Component {
   handleChange = (event) => {
 
     const { name, value } = event.target;
-    // console.log({name}, {value})
+    console.log({name}, {value})
     this.setState({ item: { ...this.state.item, [name]: value } })
 
   }
 
   handleRadio = (event) => {
-   const { name, checked } = event.target;
-   this.setState({ contact: { ...this.state.contact, [name]: checked } })
+    const { name, checked } = event.target;
+    this.setState({ contact: { ...this.state.contact, [name]: checked } })
   }
 
-  handleSelect = (event)=>{
-    this.setState({ item: { category: [event.target.value]} })
+  handleSelect = (event) => {
+    console.log(event.target.value)
+    this.setState({ item: { category: [event.target.value] } })
   }
 
   handleSubmit = (event) => {
@@ -65,20 +68,46 @@ class ItemForm extends Component {
         fd.append(`location.coordinates`, this.state.item.location.coordinates[1])
       } else {
         fd.append(key, this.state.item[key])
+        console.log(key)
       }
 
     }
 
     fd.append('image', this.imageRef.current.files[0]);
 
+    const url = this.props.match.path;
+    const params = this.props.match.params.idItem;
+    console.log("submit", params)
 
-    apiHandler.createItem(fd)
-      .then(response => {console.log(response)})
-      .catch(err => console.log(err))
+    if (url.includes("/item/edit/")) {
 
-    apiHandler.createContact(this.state.contact)
-    .then(response => console.log("contact",response))
-    .catch(err => console.log(err))
+      apiHandler.updateItem(params, fd)
+        .then(response => {
+          // for (var value of fd.values()) {
+          //   console.log("data", value);
+          // }
+          // console.log("response", response)
+          this.props.history.push("/profile") 
+        })
+        .catch(err => console.log(err))
+
+      apiHandler.createContact(this.state.contact)
+        .then(response => console.log("contact", response))
+        .catch(err => console.log(err))
+
+    } else {
+      apiHandler.createItem(fd)
+        .then(response => { 
+          // console.log("item", response)
+          this.props.history.push("/profile") 
+        })
+        .catch(err => console.log(err))
+
+      apiHandler.createContact(this.state.contact)
+        .then(response => console.log("contact", response))
+        .catch(err => console.log(err))
+    }
+
   };
 
   handlePlace = (place) => {
@@ -98,8 +127,28 @@ class ItemForm extends Component {
 
   };
 
+  componentDidMount() {
+    const url = this.props.match.path;
+    const params = this.props.match.params.idItem;
+    console.log(params)
+
+    if (url.includes("/item/edit/")) {
+      apiHandler.getOneItem(params)
+        .then(data => {
+          console.log(data)
+          const { name, category, description, address, quantity } = data;
+
+          this.setState({
+            item: { name, category, description, address, quantity }
+          })
+        })
+        .catch(err => console.log(err))
+    }
+  }
+
+
   render() {
-    //  console.log(this.state.item.category)
+    // console.log("first check",this.state.item)
     return (
       <div className="ItemForm-container">
         <form className="form" onSubmit={this.handleSubmit} >
@@ -135,7 +184,7 @@ class ItemForm extends Component {
               <option value="-1" disabled>
                 Select a category
               </option>
-              <option value="Plant" defaultValue>Plant</option>
+              <option value="Plant">Plant</option>
               <option value="Kombucha">Kombucha</option>
               <option value="Vinegar">Vinegar</option>
               <option value="Kefir">Kefir</option>
@@ -224,4 +273,4 @@ class ItemForm extends Component {
   }
 }
 
-export default ItemForm;
+export default withRouter(ItemForm);

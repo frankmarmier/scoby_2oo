@@ -1,4 +1,5 @@
 import React from 'react'
+import { NavLink } from 'react-router-dom'
 
 function ItemCard(props) {
 
@@ -23,10 +24,7 @@ function ItemCard(props) {
                                                 >Delete</button>
                                         </span>
                                         <span>
-                                                <button
-                                                        className="btn-primary"
-                                                        onClick={e => props.handleEdit(e, props._id)}
-                                                >Edit</button>
+                                                 <NavLink to={`/item/edit/${props._id}`} className="btn-primary">Edit</NavLink>
                                         </span>
                                 </div>
                         </div>

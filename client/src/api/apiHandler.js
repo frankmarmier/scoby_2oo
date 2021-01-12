@@ -46,28 +46,42 @@ export default {
 
   getItems() {
     return service
-      .get("/api/items/user")
+      .get("/api/items")
       .then((res) => res.data)
       .catch(errorHandler);
   },
 
-  getUserItems(){
+  getOneItem(idItem) {
     return service
-    .get("/api/items")
-    .then((res) => res.data)
-    .catch(errorHandler)
+      .get(`/api/items/${idItem}`)
+      .then((res) => res.data)
+      .catch(errorHandler);
   },
 
-  deleteItem(idItem){
+  getUserItems() {
     return service
-    .delete(`/api/items/${idItem}`)
-    .then((res) => res.data)
-    .catch(errorHandler)
+      .get("/api/items/user")
+      .then((res) => res.data)
+      .catch(errorHandler)
+  },
+
+  deleteItem(idItem) {
+    return service
+      .delete(`/api/items/${idItem}`)
+      .then((res) => res.data)
+      .catch(errorHandler)
   },
 
   createItem(item) {
     return service
       .post("/api/items", item)
+      .then((res) => res.data)
+      .catch(errorHandler);
+  },
+
+  updateItem(idItem, data) {
+    return service
+      .patch(`/api/items/${idItem}`, data)
       .then((res) => res.data)
       .catch(errorHandler);
   },
@@ -91,5 +105,12 @@ export default {
       .post("/api/users/phone", phone)
       .then((res) => res.data)
       .catch(errorHandler);
-  }
+  },
+
+  updateProfile(data) {
+    return service
+    .patch("/api/users/me", data)
+    .then((res) => res.data)
+    .catch(errorHandler);
+}
 };

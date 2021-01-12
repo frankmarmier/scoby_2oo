@@ -13,7 +13,7 @@ class Profile extends Component {
   }
 
   getData = () => {
-    const a = apiHandler.getPhoneNumber()
+    apiHandler.getPhoneNumber()
       .then(phone => {
         if (phone[0].phoneNumber !== 0) {
           this.setState({ phoneNumber: phone[0].phoneNumber })
@@ -21,12 +21,10 @@ class Profile extends Component {
 
       })
       .catch(err => console.log(err))
-
-    const b = apiHandler.getUserItems()
-      .then(list => this.setState({ list }))
+    console.log("---list of items of this user")
+    apiHandler.getUserItems()
+      .then(list => this.setState({ list:list }))
       .catch(err => console.log(err))
-
-    Promise.all([a, b]).then(ok => console.log(ok)).catch(err => console.log(err))
   }
 
   componentDidMount() {
@@ -45,21 +43,17 @@ class Profile extends Component {
       .catch(err => console.log(err))
   }
 
-  handleEdit = (event, id) => {
-    console.log(id)
-  }
-
   handleDelete = (event, id) => {
     console.log(id)
     apiHandler.deleteItem(id)
-      .then((res) =>  this.getData())
+      .then((res) => this.getData())
       .catch(err => console.log(err))
   }
 
   render() {
     const { authContext } = this.props;
     const { user } = authContext;
-    // console.log(this.state.list)
+    console.log("list", this.state.list)
     return (
       <div style={{ padding: "100px", fontSize: "1.25rem" }}>
         <h2 style={{ fontSize: "1.5rem", marginBottom: "10px" }}>
@@ -115,17 +109,19 @@ class Profile extends Component {
           </div>
 
           {/* Break whatever is belo  */}
-          <div className="CardItem">
-            <div className="item-empty">
-              <div className="round-image">
-                <img src="/media/personal-page-empty-state.svg" alt="" />
+          {this.state.list.length === 0 &&
+            <div className="CardItem">
+              <div className="item-empty">
+                <div className="round-image">
+                  <img src="/media/personal-page-empty-state.svg" alt="" />
+                </div>
+                <p>You don't have any items :(</p>
               </div>
-              <p>You don't have any items :(</p>
             </div>
-          </div>
-
+          }
           <div className="CardItem">
-            <h3>Your items</h3>
+            {this.state.list.length === 0 ? "" : <h3>Your items</h3>}
+
             {this.state.list.map((item, id) => {
               return (
                 <ItemCard
@@ -135,9 +131,9 @@ class Profile extends Component {
                   image={item.image}
                   quantity={item.quantity}
                   _id={item._id}
-                  handleEdit={this.handleEdit}
                   handleDelete={this.handleDelete}
                 />
+
               )
             })}
 
