@@ -56,6 +56,9 @@ class ItemForm extends Component {
     // Take a look at the data and see what you can get from it.
     // Look at the item model to know what you should retrieve and set as state.
     console.log(place);
+    this.setState ({
+      location: {type:"Point", coordinates:place.center}
+    })
   };
 
   render() {
