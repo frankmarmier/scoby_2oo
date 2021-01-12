@@ -10,25 +10,6 @@ class Profile extends Component {
     items: [],
   };
 
-  // getAllItemsForUser = () => {
-  //   const { authContext } = this.props;
-  //   const { user } = authContext;
-
-  //   apiHandler
-  //     .getItems()
-  //     .then((apiResp) => {
-  //       console.log(apiResp);
-  //       const userItems = apiResp.filter((item) => item.id_user === user._id);
-
-  //       this.setState({
-  //         items: userItems,
-  //       });
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // };
-
   componentDidMount() {
     const { authContext } = this.props;
     const { user } = authContext;
@@ -49,6 +30,14 @@ class Profile extends Component {
         console.log(error);
       });
   }
+
+  deleteItem = (itemId) => {
+    apiHandler.deleteItem(itemId).then(() => {
+      this.setState({
+        items: this.state.items.filter((it) => it._id !== itemId),
+      });
+    });
+  };
 
   render() {
     const { authContext } = this.props;
@@ -123,7 +112,7 @@ class Profile extends Component {
 
               {this.state.items.map((item) => {
                 return (
-                  <div className="item">
+                  <div className="item" key={item._id}>
                     <div className="round-image">
                       <img src={item.image} alt="item" />
                     </div>
@@ -133,7 +122,14 @@ class Profile extends Component {
                       <p>Description: {item.description}</p>
                       <div className="buttons">
                         <span>
-                          <button className="btn-secondary">Delete</button>
+                          <button
+                            onClick={() => {
+                              this.deleteItem(item._id);
+                            }}
+                            className="btn-secondary"
+                          >
+                            Delete
+                          </button>
                         </span>
                         <span>
                           <button className="btn-primary">Edit</button>

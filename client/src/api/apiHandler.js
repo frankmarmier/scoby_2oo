@@ -57,5 +57,13 @@ export default {
       .then((res) => res.data)
       .catch(errorHandler);
   },
-};
 
+  deleteItem(itemId) {
+    return service
+      .delete("/api/items/" + itemId)
+      .then(() => {
+        console.log("successfully deleted");
+      })
+      .catch(errorHandler);
+  },
+};
