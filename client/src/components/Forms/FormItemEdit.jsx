@@ -12,9 +12,22 @@ class ItemFormEdit extends Component {
   state = {};
 
   componentDidMount() {
+    console.log(this.props.match.params.id);
     apiHandler
       .getItems()
-      .then(() => {})
+      .then((apiResp) => {
+        const itemToEdit = apiResp.filter(
+          (item) => item._id === this.props.match.params.id
+        );
+        this.setState({
+          name: itemToEdit[0].name,
+          category: itemToEdit[0].category,
+          quantity: itemToEdit[0].quantity,
+          address: itemToEdit[0].address,
+          description: itemToEdit[0].description,
+          id: itemToEdit[0]._id,
+        });
+      })
       .catch((err) => {});
   }
 
@@ -36,9 +49,9 @@ class ItemFormEdit extends Component {
     console.log("Wax On Wax Off");
 
     apiHandler
-      .addItem(this.state)
+      .editItem(this.state.id, this.state)
       .then((data) => {
-        this.props.history.push("/");
+        this.props.history.push("/profile");
       })
       .catch((error) => {
         console.log(error);
@@ -144,12 +157,6 @@ class ItemFormEdit extends Component {
               value={this.state.image}
             />
           </div>
-
-          <p className="message">
-            <img src="/media/info.svg" alt="info" />
-            Want to be contacted by phone? Add your phone number in your
-            personal page.
-          </p>
 
           <button className="btn-submit">Save Changes</button>
         </form>
