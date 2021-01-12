@@ -3,7 +3,53 @@ import { Link } from "react-router-dom";
 import { withUser } from "../components/Auth/withUser";
 import "../styles/Profile.css";
 import "../styles/CardItem.css";
+import apiHandler from "../api/apiHandler";
+
 class Profile extends Component {
+  state = {
+    items: [],
+  };
+
+  // getAllItemsForUser = () => {
+  //   const { authContext } = this.props;
+  //   const { user } = authContext;
+
+  //   apiHandler
+  //     .getItems()
+  //     .then((apiResp) => {
+  //       console.log(apiResp);
+  //       const userItems = apiResp.filter((item) => item.id_user === user._id);
+
+  //       this.setState({
+  //         items: userItems,
+  //       });
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // };
+
+  componentDidMount() {
+    const { authContext } = this.props;
+    const { user } = authContext;
+
+    apiHandler
+      .getItems()
+      .then((apiResp) => {
+        console.log(apiResp);
+        const userItems = apiResp.filter((item) => item.id_user === user._id);
+
+        this.setState({
+          items: userItems,
+        });
+
+        console.log(this.state.items);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
   render() {
     const { authContext } = this.props;
     const { user } = authContext;
@@ -60,39 +106,46 @@ class Profile extends Component {
           </div>
 
           {/* Break whatever is belo  */}
-          <div className="CardItem">
-            <div className="item-empty">
-              <div className="round-image">
-                <img src="/media/personal-page-empty-state.svg" alt="" />
-              </div>
-              <p>You don't have any items :(</p>
-            </div>
-          </div>
-
-          <div className="CardItem">
-            <h3>Your items</h3>
-            <div className="item">
-              <div className="round-image">
-                <img
-                  src="https://vignette.wikia.nocookie.net/simpsons/images/1/14/Ralph_Wiggum.png/revision/latest/top-crop/width/360/height/360?cb=20100704163100"
-                  alt="item"
-                />
-              </div>
-              <div className="description">
-                <h2>Name of item</h2>
-                <h4>Quantity: 1 </h4>
-                <p>Description of the item</p>
-                <div className="buttons">
-                  <span>
-                    <button className="btn-secondary">Delete</button>
-                  </span>
-                  <span>
-                    <button className="btn-primary">Edit</button>
-                  </span>
+          {this.state.items.length === 0 && (
+            <div className="CardItem">
+              <div className="item-empty">
+                <div className="round-image">
+                  <img src="/media/personal-page-empty-state.svg" alt="" />
                 </div>
+                <p>You don't have any items :(</p>
               </div>
             </div>
-          </div>
+          )}
+
+          {this.state.items.length > 0 && (
+            <div className="CardItem">
+              <h3>Your items</h3>
+
+              {this.state.items.map((item) => {
+                return (
+                  <div className="item">
+                    <div className="round-image">
+                      <img src={item.image} alt="item" />
+                    </div>
+                    <div className="description">
+                      <h2>{item.name}</h2>
+                      <h4>Quantity: {item.quantity} </h4>
+                      <p>Description: {item.description}</p>
+                      <div className="buttons">
+                        <span>
+                          <button className="btn-secondary">Delete</button>
+                        </span>
+                        <span>
+                          <button className="btn-primary">Edit</button>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+          {/* </div> */}
         </section>
       </div>
     );

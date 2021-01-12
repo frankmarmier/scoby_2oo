@@ -1,8 +1,19 @@
 import React from "react";
-import { Redirect, Route } from "react-router-dom";
 import { withUser } from "../components/Auth/withUser";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  Redirect,
+  useHistory,
+  useLocation
+} from "react-router-dom";
+
+
 
 const ProtectedRoute = ({ component: Component, authContext, ...rest }) => {
+
   if (authContext.isLoading) {
     return null;
   } else if (authContext.isLoggedIn) {

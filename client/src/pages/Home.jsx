@@ -1,12 +1,19 @@
 import React from "react";
 import ReactMapboxGl, { Layer, Feature, Marker} from "react-mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
+import apiHandler from "../api/apiHandler";
 
 const Map = ReactMapboxGl({
   accessToken:
     process.env.REACT_APP_MAPBOX_TOKEN
 });
 
+function getAllItems () {
+  apiHandler.getItems()
+  .then((respFromApi) => {
+    console.log(respFromApi)
+  })
+}
 
 const Home = (props) => {
   // Implement react map box here.
@@ -20,9 +27,11 @@ const Home = (props) => {
           width: "90vw",
         }}
       >
-        <Marker  coordinates={[-0.13,  51.501476]} type="symbol" id="marker" layout={{ "icon-image": "marker" }}>
+        <div>
+        <Marker onClick={getAllItems()} coordinates={[-0.13,  51.501476]} type="symbol" id="marker" layout={{ "icon-image": "marker" }}>
           <img src="https://img.icons8.com/color/48/000000/marker.png" alt="marker"/>
         </Marker>
+        </div>
       </Map>
       <p>On home /</p>
     </div>
