@@ -2,17 +2,27 @@ import React, { Component } from "react";
 import ReactMapboxGl, { Layer, Feature, Marker } from "react-mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import apiHandler from "../api/apiHandler";
+import ItemCard from "../components/ItemCard"
 
 const Map = ReactMapboxGl({
   accessToken: process.env.REACT_APP_MAPBOX_TOKEN,
 });
 
-function getAllItems() {}
+
 
 class Home extends Component {
   state = {
     items: [],
+    selectedItem: ""
   };
+
+
+  showItemCard (item) {
+    this.setState ({
+      selectedItem: item
+    })
+  }
+
 
   componentDidMount() {
     apiHandler.getItems().then((respFromApi) => {
@@ -37,14 +47,17 @@ class Home extends Component {
           {this.state.items.map((item) => {
             return (
               <div key={item._id}>
-              <Marker onClick={getAllItems()} coordinates={[item.location.coordinates[0],  item.location.coordinates[1]]} type="symbol" id="marker" layout={{ "icon-image": "marker" }}>
+              <Marker onClick={() => this.showItemCard(item)} coordinates={[item.location.coordinates[0],  item.location.coordinates[1]]} type="symbol" id="marker" layout={{ "icon-image": "marker" }}>
             <img src="https://img.icons8.com/color/48/000000/marker.png" alt="marker"/>
           </Marker>
             </div>
             )
           })}
+
+         
    
         </Map>
+        <ItemCard selectedItem={this.state.selectedItem}/>
         <p>On home /</p>
       </div>
     );

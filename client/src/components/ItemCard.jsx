@@ -7,7 +7,7 @@ export class ItemCard extends Component {
         <div>
           <button>close</button>
           <img src="" alt="" />
-          <h2>Item name</h2>
+          <h2>{this.props.selectedItem}</h2>
           <p>Quantity: number | category</p>
           <p>id_user.name</p>
           <p>address</p>
