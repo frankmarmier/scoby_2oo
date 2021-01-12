@@ -46,8 +46,50 @@ export default {
 
   getItems() {
     return service
-      .get("/api/items")
+      .get("/api/items/user")
       .then((res) => res.data)
       .catch(errorHandler);
   },
+
+  getUserItems(){
+    return service
+    .get("/api/items")
+    .then((res) => res.data)
+    .catch(errorHandler)
+  },
+
+  deleteItem(idItem){
+    return service
+    .delete(`/api/items/${idItem}`)
+    .then((res) => res.data)
+    .catch(errorHandler)
+  },
+
+  createItem(item) {
+    return service
+      .post("/api/items", item)
+      .then((res) => res.data)
+      .catch(errorHandler);
+  },
+
+  createContact(contact) {
+    return service
+      .post("/api/users/contact", contact)
+      .then((res) => res.data)
+      .catch(errorHandler);
+  },
+
+  getPhoneNumber() {
+    return service
+      .get("/api/users/phone")
+      .then((res) => res.data)
+      .catch(errorHandler);
+  },
+
+  updatePhoneNumber(phone) {
+    return service
+      .post("/api/users/phone", phone)
+      .then((res) => res.data)
+      .catch(errorHandler);
+  }
 };

@@ -25,7 +25,7 @@ class FormSignin extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
     const { authContext } = this.props;
-
+    console.log(this.props)
     apiHandler
       .signin(this.state)
       .then((data) => {

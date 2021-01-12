@@ -3,11 +3,63 @@ import { Link } from "react-router-dom";
 import { withUser } from "../components/Auth/withUser";
 import "../styles/Profile.css";
 import "../styles/CardItem.css";
+import apiHandler from "../api/apiHandler";
+import ItemCard from "../components/ItemCard";
+
 class Profile extends Component {
+  state = {
+    phoneNumber: "",
+    list: []
+  }
+
+  getData = () => {
+    const a = apiHandler.getPhoneNumber()
+      .then(phone => {
+        if (phone[0].phoneNumber !== 0) {
+          this.setState({ phoneNumber: phone[0].phoneNumber })
+        }
+
+      })
+      .catch(err => console.log(err))
+
+    const b = apiHandler.getUserItems()
+      .then(list => this.setState({ list }))
+      .catch(err => console.log(err))
+
+    Promise.all([a, b]).then(ok => console.log(ok)).catch(err => console.log(err))
+  }
+
+  componentDidMount() {
+    this.getData();
+  }
+
+  handlePhone = (event) => {
+    this.setState({ phoneNumber: event.target.value })
+  }
+
+  addPhoneNumber = (event) => {
+    event.preventDefault();
+    // console.log(this.state.phoneNumber)
+    apiHandler.updatePhoneNumber({ phoneNumber: this.state.phoneNumber })
+      .then(phone => console.log(phone))
+      .catch(err => console.log(err))
+  }
+
+  handleEdit = (event, id) => {
+    console.log(id)
+  }
+
+  handleDelete = (event, id) => {
+    console.log(id)
+    apiHandler.deleteItem(id)
+      .then((res) =>  this.getData())
+      .catch(err => console.log(err))
+  }
+
   render() {
     const { authContext } = this.props;
     const { user } = authContext;
-
+    // console.log(this.state.list)
     return (
       <div style={{ padding: "100px", fontSize: "1.25rem" }}>
         <h2 style={{ fontSize: "1.5rem", marginBottom: "10px" }}>
@@ -42,7 +94,7 @@ class Profile extends Component {
           <div className="user-contact">
             <h4>Add a phone number</h4>
 
-            <form className="form">
+            <form className="form" onSubmit={this.addPhoneNumber}>
               <div className="form-group">
                 <label className="label" htmlFor="phoneNumber">
                   Phone number
@@ -53,6 +105,9 @@ class Profile extends Component {
                   type="text"
                   name="phoneNumber"
                   placeholder="Add phone number"
+                  value={this.state.phoneNumber}
+                  onChange={this.handlePhone}
+                  contentEditable
                 />
               </div>
               <button className="form__button">Add phone number</button>
@@ -71,27 +126,21 @@ class Profile extends Component {
 
           <div className="CardItem">
             <h3>Your items</h3>
-            <div className="item">
-              <div className="round-image">
-                <img
-                  src="https://vignette.wikia.nocookie.net/simpsons/images/1/14/Ralph_Wiggum.png/revision/latest/top-crop/width/360/height/360?cb=20100704163100"
-                  alt="item"
+            {this.state.list.map((item, id) => {
+              return (
+                <ItemCard
+                  key={id}
+                  name={item.name}
+                  description={item.description}
+                  image={item.image}
+                  quantity={item.quantity}
+                  _id={item._id}
+                  handleEdit={this.handleEdit}
+                  handleDelete={this.handleDelete}
                 />
-              </div>
-              <div className="description">
-                <h2>Name of item</h2>
-                <h4>Quantity: 1 </h4>
-                <p>Description of the item</p>
-                <div className="buttons">
-                  <span>
-                    <button className="btn-secondary">Delete</button>
-                  </span>
-                  <span>
-                    <button className="btn-primary">Edit</button>
-                  </span>
-                </div>
-              </div>
-            </div>
+              )
+            })}
+
           </div>
         </section>
       </div>
