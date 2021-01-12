@@ -4,9 +4,8 @@ import "mapbox-gl/dist/mapbox-gl.css";
 
 const Map = ReactMapboxGl({
   accessToken:
-    "pk.eyJ1IjoiZWxpc2FjaGVuIiwiYSI6ImNranNudjgwcTJrYnUzMG1qNWk4c3ZuanoifQ.-_WJInlM_QQf87XCPC7IWQ",
+    process.env.REACT_APP_MAPBOX_TOKEN
 });
-
 
 
 const Home = (props) => {
