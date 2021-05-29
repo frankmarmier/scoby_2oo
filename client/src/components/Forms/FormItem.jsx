@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import LocationAutoComplete from "../LocationAutoComplete";
 import "../../styles/form.css";
+import Button from "../Base/Button";
 
 class ItemForm extends Component {
   state = {};
@@ -116,7 +117,7 @@ class ItemForm extends Component {
             personal page.
           </p>
 
-          <button className="btn-submit">Add Item</button>
+          <Button className="btn-submit">Add Item</Button>
         </form>
       </div>
     );

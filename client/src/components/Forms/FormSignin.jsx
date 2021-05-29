@@ -4,6 +4,7 @@ import { withUser } from "../Auth/withUser";
 import { withRouter } from "react-router-dom";
 import apiHandler from "../../api/apiHandler";
 import "../../styles/form.css";
+import Button from "../Base/Button";
 
 class FormSignin extends Component {
   state = {};
@@ -77,7 +78,7 @@ class FormSignin extends Component {
             />
           </div>
 
-          <button className="btn-submit">Let's go!</button>
+          <Button>Let's go!</Button>
         </form>
 
         <div className="form-section-bottom">

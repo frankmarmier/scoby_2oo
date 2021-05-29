@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { withUser } from "../components/Auth/withUser";
 import "../styles/Profile.css";
 import "../styles/CardItem.css";
+import Button from "../components/Base/Button";
 class Profile extends Component {
   render() {
     const { authContext } = this.props;
@@ -55,7 +56,7 @@ class Profile extends Component {
                   placeholder="Add phone number"
                 />
               </div>
-              <button className="form__button">Add phone number</button>
+              <Button className="form__button">Add phone number</Button>
             </form>
           </div>
 
