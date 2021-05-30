@@ -31,9 +31,7 @@ router.post("/signin", (req, res, next) => {
       delete userObj.password;
       res.status(200).json(userObj);
     })
-    .catch((error) => {
-      res.status(500).json(error);
-    });
+    .catch(next);
 });
 
 router.post("/signup", (req, res, next) => {
@@ -70,12 +68,10 @@ router.post("/signup", (req, res, next) => {
           res.status(201).json(userObj);
         });
       } catch (error) {
-        res.status(500).json(error);
+        next(error);
       }
     })
-    .catch((error) => {
-      res.status(500).json(error);
-    });
+    .catch(next);
 });
 
 router.get("/isLoggedIn", (req, res, next) => {
@@ -86,9 +82,7 @@ router.get("/isLoggedIn", (req, res, next) => {
       .then((userDocument) => {
         res.status(200).json(userDocument);
       })
-      .catch((error) => {
-        res.status(500).json(error);
-      });
+      .catch(next);
   } else {
     res.status(401).json({ message: "Unauthorized" });
   }
@@ -97,7 +91,7 @@ router.get("/isLoggedIn", (req, res, next) => {
 router.get("/logout", (req, res, next) => {
   // Well...
   req.session.destroy(function (error) {
-    if (error) res.status(500).json(error);
+    if (error) next(error);
     else res.status(200).json({ message: "Succesfully disconnected." });
   });
 });

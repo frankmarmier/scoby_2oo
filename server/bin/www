@@ -12,7 +12,14 @@ const http = require("http");
  * Get port from environment and store in Express.
  */
 
-const port = normalizePort(process.env.PORT || "3000");
+if (!process.env.PORT) {
+  throw Error(`
+    No environment variable for PORT has 
+    been configured, please set one 
+    in your .env file
+  `);
+}
+const port = normalizePort(process.env.PORT);
 app.set("port", port);
 
 /**
@@ -83,4 +90,5 @@ function onListening() {
   const addr = server.address();
   const bind = typeof addr === "string" ? "pipe " + addr : "port " + addr.port;
   debug("Listening on " + bind);
+  console.log(`Server listening on http://localhost:${process.env.PORT}`);
 }
