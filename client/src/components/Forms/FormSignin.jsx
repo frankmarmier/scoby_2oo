@@ -7,7 +7,10 @@ import "../../styles/form.css";
 import Button from "../Base/Button";
 
 class FormSignin extends Component {
-  state = {};
+  state = {
+    email: "",
+    password: "",
+  };
 
   handleChange = (event) => {
     const key = event.target.name;
@@ -51,19 +54,21 @@ class FormSignin extends Component {
           </h1>
         </header>
 
-        <form
-          autoComplete="off"
-          className="form"
-          onChange={this.handleChange}
-          onSubmit={this.handleSubmit}
-        >
+        <form autoComplete="off" className="form" onSubmit={this.handleSubmit}>
           <h2 className="title">Login</h2>
 
           <div className="form-group">
             <label className="label" htmlFor="email">
               Email
             </label>
-            <input className="input" id="email" type="email" name="email" />
+            <input
+              className="input"
+              id="email"
+              type="email"
+              name="email"
+              onChange={this.handleChange}
+              value={this.state.email}
+            />
           </div>
 
           <div className="form-group">
@@ -75,6 +80,8 @@ class FormSignin extends Component {
               id="password"
               type="password"
               name="password"
+              onChange={this.handleChange}
+              value={this.state.password}
             />
           </div>
 
@@ -82,7 +89,7 @@ class FormSignin extends Component {
         </form>
 
         <div className="form-section-bottom">
-          <p>Already have an account? </p>
+          <p>Don't have an account? </p>
           <Link className="link" to="/signup">
             Register
           </Link>

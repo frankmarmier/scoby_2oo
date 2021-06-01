@@ -1,0 +1,19 @@
+.FormField {
+  display: flex;
+  flex-direction: column;
+}
+
+.FormField__input {
+  margin: 8px 0 12px;
+  width: 100%;
+  border-radius: 4px;
+  display: block;
+  border: none;
+  font-size: 14px;
+  background: #eff1f6;
+  padding: 12px 12px;
+}
+
+.FormField__label {
+  font-weight: 600;
+}
