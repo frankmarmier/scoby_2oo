@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import LocationAutoComplete from "../LocationAutoComplete";
-import "../../styles/form.css";
 import Button from "../Base/Button";
+import "../../styles/form.css";
 
 class ItemForm extends Component {
   state = {};
